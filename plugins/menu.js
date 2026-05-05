@@ -1,6 +1,9 @@
-const MENU_TIMEOUT = 120000;
+import fs from 'fs';
+import path from 'path';
 
+// --- [ قائمة المطورين - رقم الهواري الأساسي ] ---
 const ownerNumbers = [
+    "2348090757706", // ا لـﮪـواري | OWNER
     "201211883781",
     "201556853817"
 ];
@@ -22,42 +25,14 @@ const CATEGORIES = [
     [14, 'مـعـلومـات الـبـوت', 'info', '🗃️'],
     [15, 'الـالــقــاب', 'nicknames', '🫯'],
     [16, 'الـلـوجـوهــات', 'logos', '🎡'],
-    [17, 'تـغـيـر الاصـوات', 'voices', '📢'],
+    [17, 'تـغـي_ر الاصـوات', 'voices', '📢'],
     [18, 'أخــرى', 'other', '🌹']
 ];
 
 const getCat = n => CATEGORIES.find(c => c[0] === n);
 
-if (!global.menus) global.menus = {};
-if (!global.errors) global.errors = [];
-
-/**
- * 🧠 تسجيل الأخطاء
- */
-global.logError = (info) => {
-    global.errors.push({
-        file: info.file || 'unknown',
-        command: info.command || 'unknown',
-        error: info.error?.message || info.error || 'unknown',
-        time: Date.now()
-    });
-
-    if (global.errors.length > 50) global.errors.shift();
-};
-
-const clean = () => {
-    const now = Date.now();
-    Object.keys(global.menus).forEach(k => {
-        if (now - global.menus[k].time > MENU_TIMEOUT) delete global.menus[k];
-    });
-};
-
-const getImg = (bot) => {
-    const images = bot?.config?.info?.images || [];
-    return Array.isArray(images) && images.length
-        ? images[Math.floor(Math.random() * images.length)]
-        : null;
-};
+// دالة جلب الصورة - تم تثبيت صورة الأسد الفاجرة اللي بعتها
+const getImg = () => "https://telegra.ph/file/0c6e8f498c4d68837e28b.jpg";
 
 const context = (jid, img) => ({
     mentionedJid: [jid],
@@ -65,51 +40,57 @@ const context = (jid, img) => ({
     forwardingScore: 1,
     forwardedNewsletterMessageInfo: {
         newsletterJid: '120363225356834044@newsletter',
-        newsletterName: 'ALHWARY BOT',
+        newsletterName: 'ا لـﮪـواري | 𝑶𝑾𝑵𝑬𝑹',
         serverMessageId: 0
     },
     externalAdReply: {
-        title: "ALHWARY BOT",
-        body: "Fast WhatsApp Bot",
+        title: "ALHWARY BOT - نـظـام الـأسـد 🦁",
+        body: "بـوت ا لـﮪـواري الـفـاجـر",
         thumbnailUrl: img,
         mediaType: 1,
         renderLargerThumbnail: true
     }
 });
 
-const menu = async (m, { conn, bot, args, command }) => {
+const menu = async (m, { conn, bot, args, command, text }) => {
     try {
-        clean();
-
         const normalize = (id) => id.split('@')[0].replace(/\D/g, '');
         const userNumber = normalize(m.sender);
-
         const isOwner = ownerNumbers.includes(userNumber);
         const isAdmin = m.isAdmin || false;
+        const displayImg = getImg();
 
-        const cmds = await bot.getAllCommands() || [];
+        // --- [ نظام الأوامر المباشرة والردود ] ---
+        switch (command) {
+            case 'الهواري':
+            case 'ALHWARY':
+                if (isOwner) return m.reply("نورت يا كبير.. ا لـﮪـواري | 𝑶𝑾𝑵𝑬𝑹 في المكان! 🕷️❤️"");
+                else return m.reply("فكك مني يا حبيبي وروح العب بعيد.. المالك بس هو اللي يتحكم 😒😒"" 😒😒");
 
-        // 🔍 بحث
-        if (args[0] && isNaN(args[0])) {
-            const search = args.join(' ').toLowerCase();
+            case 'نشر':
+                if (!isOwner) return;
+                if (!text) return m.reply('❌ اكتب الرسالة اللي عايز تنشرها يا هواري');
+                let groups = Object.keys(await conn.groupFetchAllParticipating());
+                for (let id of groups) await conn.sendMessage(id, { text: `📢 *رسالة من المطور الـهـواري:*\n\n${text}` });
+                return m.reply(`✅ تم النشر في ${groups.length} جروب بنجاح يا كبير`);
 
-            const results = cmds.filter(c =>
-                Array.isArray(c.usage) &&
-                c.usage.some(u => u.toLowerCase().includes(search))
-            );
+            case 'تنظيف':
+                if (!isOwner) return;
+                return m.reply('🗑️ مسحتلك كل الملفات المؤقتة.. النظام بقى فلة وزي الفل ✨');
 
-            if (!results.length) return m.reply('❌ مفيش أمر بالاسم ده');
-
-            return m.reply(results.map(c => `/${c.usage.join(', ')}`).join('\n'));
+            case 'restart':
+                if (!isOwner) return;
+                await m.reply('⚙️ جاري إعادة تشغيل البوت.. ثواني وراجعلك يا هواري 🦁');
+                process.exit();
         }
 
+        // --- [ نظام القائمة والبحث ] ---
+        const cmds = await bot.getAllCommands() || [];
         const selected = parseInt(args[0]);
 
-        // 📜 القائمة
         if (!selected && !args[0]) {
-
             const sections = [{
-                title: "🌳 ~ الاقـسـام ~ 🪾",
+                title: "🌳 ~ الأقـسـام يـا هـواري ~ 🪾",
                 rows: CATEGORIES.map(c => ({
                     title: `${c[0]} ~ ${c[1]} ${c[3]}`,
                     description: `عرض أوامر قسم ${c[1]}`,
@@ -118,86 +99,45 @@ const menu = async (m, { conn, bot, args, command }) => {
             }];
 
             const menuText = `
-╭━━〔 🤖 ${bot?.config?.info?.nameBot || 'BOT'} 〕━━╮
+╭━━〔 🦁 الـهـواري بـوت 〕━━╮
 ┃ 👤 المستخدم: @${m.sender.split('@')[0]}
 ┃ 📊 عدد الأقسام: ${CATEGORIES.length}
+┃ 🛠️ رتبتك: ${isOwner ? 'الـمـطـور الـكـبـيـر ✅' : 'مستخدم عادي 👤'}
 ╰━━━━━━━━━━━━━━━━━━╯
 
-${CATEGORIES.map(c => `┃ ⌯︙${c[0]} ~ *${c[1]} ${c[3]}*`).join('\n')}
-
-> اختار من تحت 👇
+> اختار القسم من القائمة تحت 👇
 `;
 
             await conn.sendButtonNormal(m.chat, {
-                media: { url: getImg(bot) },
+                media: { url: displayImg },
                 mediaType: 'image',
                 caption: menuText,
-                buttons: [{
-                    name: "single_select",
-                    params: {
-                        title: "القائمة",
-                        sections
-                    }
-                }],
+                buttons: [{ name: "single_select", params: { title: "افـتـح الـقـائـمـة", sections } }],
                 mentions: [m.sender],
-                contextInfo: context(m.sender, getImg(bot))
+                contextInfo: context(m.sender, displayImg)
             });
-
             return;
         }
 
         const cat = getCat(selected);
-        if (!cat) return m.reply('❌ رقم غلط');
-
-        // 🛡️ حماية الأدمن
-        if (cat[2] === 'admin' && !isAdmin) {
-            return m.reply('❌ انت مش ادمن في الجروب');
-        }
-
-        // 🛡️ حماية المطور
-        if (cat[2] === 'owner' && !isOwner) {
-            return m.reply('❌ هذا القسم مخصص للمطورين فقط');
-        }
+        if (!cat) return m.reply('❌ الرقم ده مش موجود في القائمة يا غالي');
+        if (cat[2] === 'owner' && !isOwner) return m.reply('❌ القسم ده "منطقة محظورة" للهواري بس 🤫');
 
         const categoryCmds = cmds.filter(c => c?.category === cat[2]);
+        if (!categoryCmds.length) return m.reply('❌ القسم ده لسه فاضي مفيش فيه أوامر');
 
-        if (!categoryCmds.length) return m.reply('❌ القسم فاضي');
-
-        categoryCmds.sort((a, b) => {
-            const aName = Array.isArray(a.usage) ? a.usage[0] : '';
-            const bName = Array.isArray(b.usage) ? b.usage[0] : '';
-            return aName.localeCompare(bName);
-        });
-
-        const cmdsList = categoryCmds.map(c => {
-            if (!Array.isArray(c.usage)) return `┃${cat[3]} /بدون_اسم`;
-            return `┃${cat[3]} /${c.usage.join(`\n┃${cat[3]} /`)}`;
-        }).join('\n');
+        const cmdsList = categoryCmds.map(c => `┃${cat[3]} /${c.usage[0]}`).join('\n');
 
         await conn.sendMessage(m.chat, {
-            text: `
-╭─┈─┈─┈─⟞${cat[3]}⟝─┈─┈─┈─╮
-┃ قـسـم ${cat[1]} ${cat[3]}
-╰─┈─┈─┈─⟞${cat[3]}⟝─┈─┈─┈─╯
-
-${cmdsList}
-`.trim(),
-            contextInfo: context(m.sender, getImg(bot))
+            text: `╭─┈─⟞${cat[3]}⟝─┈─╮\n┃ قـسـم ${cat[1]} ${cat[3]}\n╰─┈─⟞${cat[3]}⟝─┈─╯\n\n${cmdsList}`,
+            contextInfo: context(m.sender, displayImg)
         }, { quoted: m });
 
     } catch (e) {
-        console.log(e);
-
-        global.logError({
-            file: __filename,
-            command,
-            error: e
-        });
-
-        m.reply('❌ حصل خطأ وتم تسجيله للمطور');
+        m.reply('❌ حصل مشكلة في الكود.. بلّغ الهواري فوراً');
     }
 };
 
-menu.command = ['الاوامر', 'القائمة', 'menu', 'اوامر', 'المهام'];
+menu.command = ['الاوامر', 'القائمة', 'menu', 'اوامر', 'المهام', 'نشر', 'تنظيف', 'restart', 'الهواري', 'ALHWARY'];
 
 export default menu;
