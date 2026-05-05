@@ -44,7 +44,7 @@ const context = (jid, img) => ({
         serverMessageId: 0
     },
     externalAdReply: {
-        title: "ALHWARY BOT - نـظـام الـأسـد 🦁",
+        title: "ALHWARY BOT - نـظـام لـﮪـواري 🦁",
         body: "بـوت ا لـﮪـواري الـفـاجـر",
         thumbnailUrl: img,
         mediaType: 1,
