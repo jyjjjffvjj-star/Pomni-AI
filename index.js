@@ -34,11 +34,11 @@ if (!global.db) {
 const { config } = client;
 config.info = { 
   nameBot: "ALHWARY BOT", 
-  idChannel: "120363225356834044@newsletter",
+  idChannel: "ALHWARY BOT",
   urls: {
     repo: "https://github.com/deveni0/Pomni-AI",
     api: "https://emam-api.web.id",
-    channel: "https://whatsapp.com/channel/0029VaQim2bAu3aPsRVaDq3v"
+    channel: "https://chat.whatsapp.com/LHeUCCvuOlF8IxI4YBOYGR"
   },
   copyright: { 
     pack: 'ALHWAEY', 
