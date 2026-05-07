@@ -2,7 +2,7 @@ export default async function before(m, { conn, bot }) {
   if (!m.text) return false; 
 
   const text = m.text.toLowerCase().trim();
-  const devNumber = '2348090757706'; // <--- حطي رقمك هنا من غير علامة +
+  const devNumber = '201556853817'; // <--- حطي رقمك هنا من غير علامة +
   const toxicWords = ["فاشل", "غبي", "وسخ", "قذر", "زفت", "خرا", "خول", "أحبه", "متناك", "شرموط", "يا ابن"];
 
   // --- 1. حماية المطور (منشن بالرقم أو رد على رسالته) ---
