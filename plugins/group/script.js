@@ -7,7 +7,7 @@ const context = (jid, img) => ({
     isForwarded: true,
     forwardingScore: 1,
     forwardedNewsletterMessageInfo: {
-        newsletterJid: '120363225356834044@newsletter',
+        newsletterJid: 'ALHWARY',
         newsletterName: 'ALHWARY',
         serverMessageId: 0
     },
