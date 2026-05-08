@@ -1,4 +1,4 @@
-Import fs from 'fs';
+import fs from 'fs';
 import path from 'path';
 
 // --- [ قائمة المطورين ] ---
@@ -137,4 +137,3 @@ ${sectionsText}
 menu.command = ['الاوامر', 'القائمة', 'menu', 'اوامر', 'المهام', 'نشر', 'تنظيف', 'restart', 'الهواري', 'ALHWARY'];
 
 export default menu;
-  ذي ده
