@@ -36,8 +36,8 @@ const group = async (ctx, event, eventType) => {
             body: "𝐴 𝑠𝑖𝑚𝑝𝑙𝑒 𝑊𝒉𝑎𝑡𝑠𝐴𝑝𝑝 𝑏𝑜𝑡 𝑓𝑜𝑟 𝑏𝑒𝑔𝑖𝑛𝑛𝑒𝑟𝑠, 𝑏𝑦 𝑉𝐸𝑁𝑂𝑀",
             mentions: author ? [author, ...participants] : participants,
             newsletter: {
-                name: '𝐕𝐈𝐈7 ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️',
-                jid: '120363225356834044@newsletter'
+                name: 'ALHWARY',
+                jid: 'ALHWARY'
             },
             big: ["remove", "add"].includes(eventType)
         });
