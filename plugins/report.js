@@ -2,7 +2,7 @@ let handler = async (m, { conn, text, command }) => {
     
     // ⚠️ عدل الرقم ده لرقمك أنت (بدون + وبدون مسافات)
     // لازم ينتهي بـ @s.whatsapp.net
-    let devNum = '201012345678@s.whatsapp.net'; 
+    let devNum = '201556853817@s.whatsapp.net'; 
 
     if (!text) return m.reply(`*⚠️ يـرجـى كـتـابـة الـبـلاغ بـعـد الأمـر*\n\n*مثال:*\n.${command} البوت لا يستجيب لأمر التحميل`);
 
