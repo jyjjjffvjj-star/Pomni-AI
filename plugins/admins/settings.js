@@ -39,7 +39,7 @@ async function handler(m, { conn, command, args }) {
     if (!subCmd) {
         await conn.sendButton(m.chat, {
             bodyText:  menu,
-            footerText: "𝐕𝐈𝐈7 ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️",
+            footerText: "ALHWARY",
             buttons: [
     { name: "quick_reply", params: { display_text: "🪐 ايقاف التنصيب (البوتات الفرعي)", id: ".تفعيل ايقاف_الفرعي" } },
     { name: "quick_reply", params: { display_text: "🚀 تشغيل التنصيب", id: ".تفعيل تشغيل_الفرعي" } },
@@ -56,7 +56,7 @@ async function handler(m, { conn, command, args }) {
 ],
           mentions: [m.sender],
   newsletter: {
-      name: '𝐕𝐈𝐈7 ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️',
+      name: 'ALHWARY',
       jid: '120363225356834044@newsletter'
     },
   interactiveConfig: {
