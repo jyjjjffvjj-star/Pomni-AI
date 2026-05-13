@@ -1,9 +1,9 @@
 let handler = async (m, { conn, bot }) => {
-  let watermark = 'VA';
+  let watermark = 'ALHWARY';
   
   let quoted = {
     key: { fromMe: false, participant: '0@s.whatsapp.net', remoteJid: 'status@broadcast' },
-    message: { conversation: 'Pomni AI ❤️💙' }
+    message: { conversation: 'ALHWARY ❤️💙' }
   };
   const num = bot.config.owners[0].jid.split("@")[0];
   let vcard = `BEGIN:VCARD
