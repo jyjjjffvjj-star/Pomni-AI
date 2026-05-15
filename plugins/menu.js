@@ -32,7 +32,7 @@ const CATEGORIES = [
 const getCat = n => CATEGORIES.find(c => c[0] === n);
 
 // دالة جلب الصورة
-const getImg = () => "ALHWARY";
+const getImg = () => "https://i.ibb.co/C33RB5zx/1000072528.jpg";
 
 const context = (jid, img) => ({
     mentionedJid: [jid],
