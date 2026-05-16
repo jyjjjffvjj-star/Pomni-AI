@@ -17,7 +17,7 @@ const CATEGORIES = [
     [6, 'الـادوات', 'tools', '🚀'],
     [7, 'الـبـحـث', 'search', '🌐'],
     [8, 'الادمــن', 'admin', '👨🏻‍⚖️'],
-    [9, 'الالــعـاب', 'games', '🎮'],
+    [9, 'الalـعـاب', 'games', '🎮'],
     [10, 'الچيف', 'gif', '✴️'],
     [11, 'الـبــنـك', 'bank', '💰'],
     [12, 'الـذكـاء الاصـطـنـاعـي', 'ai', '🤖'],
@@ -86,54 +86,23 @@ const menu = async (m, { conn, bot, args, command, text }) => {
         }
 
         // --- [ نظام القائمة الرئيسي ] ---
-        const cmds = await bot.getAllCommands() || [];
-        const selected = parseInt(args[0]);
+        // جلب الأوامر مع وضع مصفوفة فارغة كاحتياط تجنباً لـ undefined
+        const cmds = (bot && typeof bot.getAllCommands === 'function') ? (await bot.getAllCommands() || []) : [];
+        
+        // هنا يمكنك تكملة بناء شكل القائمة (Menu) بناءً على متغير الـ cmds والـ CATEGORIES
+        // مثال بسيط لعرض الأقسام إذا تم طلب أمر القائمة الرئيسي:
+        let menuText = `🦁 *مـرحـبـا بـك فـي بـوت الـهـواري*\n\n`;
+        CATEGORIES.forEach(cat => {
+            menuText += `${cat[3]} *قسـم ${cat[1]}* (#${cat[2]})\n`;
+        });
 
-        if (!selected) {
-            let sectionsText = CATEGORIES.map(c => `*${c[0]}* - قسم ${c[1]} ${c[3]}`).join('\n');
-            
-            const menuText = `
-╭━━〔 🦁 الـهـواري بـوت 〕━━╮
-┃ 👤 المستخدم: @${m.sender.split('@')[0]}
-┃ 📊 عدد الأقسام: ${CATEGORIES.length}
-┃ 🛠️ رتبتك: ${isOwner ? 'الـمـطـور الـكـبـيـر ✅' : 'مستخدم عادي 👤'}
-╰━━━━━━━━━━━━━━━━━━╯
+        // إرسال القائمة مع الإعلان (Context)
+        return await conn.sendMessage(m.chat, { text: menuText }, { quoted: m, contextInfo: context(m.sender, displayImg) });
 
-*الـأقـسـام:*
-${sectionsText}
-
-> اكتب *.الاوامر* متبوعاً برقم القسم (مثال: .الاوامر 1)
-`;
-
-            await conn.sendMessage(m.chat, {
-                image: { url: displayImg },
-                caption: menuText,
-                mentions: [m.sender],
-                contextInfo: context(m.sender, displayImg)
-            }, { quoted: m });
-            return;
-        }
-
-        const cat = getCat(selected);
-        if (!cat) return m.reply('❌ الرقم ده مش موجود في القائمة يا غالي');
-        if (cat[2] === 'owner' && !isOwner) return m.reply('❌ القسم ده "منطقة محظورة" للهواري بس 🤫');
-
-        const categoryCmds = cmds.filter(c => c?.category === cat[2]);
-        if (!categoryCmds.length) return m.reply('❌ القسم ده لسه فاضي مفيش فيه أوامر');
-
-        const cmdsList = categoryCmds.map(c => `┃ ${cat[3]} /. ${Array.isArray(c.usage) ? c.usage[0] : c.usage}`).join('\n');
-
-        await conn.sendMessage(m.chat, {
-            text: `╭─┈─⟞ ${cat[1]} ${cat[3]} ⟝─┈─╮\n\n${cmdsList}\n\n╰─┈─⟞ ALHWARY ⟝─┈─╯`,
-            contextInfo: context(m.sender, displayImg)
-        }, { quoted: m });
-
-    } catch (e) {
-        console.error(e);
-        m.reply('❌ حصل مشكلة في الكود.. بلّغ الهواري فوراً');
+    } catch (error) {
+        console.error("خطأ في أمر القائمة:", error);
+        return m.reply("❌ حدث خطأ غير متوقع أثناء معالجة الأمر.");
     }
 };
-
-menu.command = ['الاوامر', 'القائمة', 'menu', 'اوامر', 'المهام', 'نشر', 'تنظيف', 'restart', 'الهواري', 'ALHWARY'];
 
 export default menu;
