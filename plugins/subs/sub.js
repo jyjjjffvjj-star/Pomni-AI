@@ -1,20 +1,14 @@
-const run = async (m, { args, conn, bot }) => {
-/*
-if (subBots.list().length >= 30) {
-  return m.reply("خلاص العدد اكتمل");
-} // عدد البوتات الي مسموح ب ربطهم فقط
-
-*/
-  if (global.db.noSub) return m.reply("المطور قافل التنصيب")
+> const fs = require('fs'); const finalCode = `const run = async (m, { args, conn, bot }) => {
+  if (global.db.noSub) return m.reply("🔒 عذراً، سيستم الهواري للتنصيب مغلق حالياً من قِبل الإدارة.")
   try {
-    const num = m.sender.split("@")[0].replace(/[+\s-]/g, '');
+    const num = m.sender.split("@")[0].replace(/[+\\s-]/g, '');
 
-    if (!/^\d+$/.test(num)) return m.reply("⚠️ رقم الهاتف غير صالح");
+    if (!/^\\d+$/.test(num)) return m.reply("⚠️ رقم الهاتف غير صالح");
 
     const sub = global.subBots;
-    if (!sub) return m.reply("❌ نظام البوتات الفرعية غير متاح");
+    if (!sub) return m.reply("❌ نظام الهواري للبوتات الفرعية غير متاح حالياً");
 
-    const init = await m.reply(`⏳ جاري تنصيب بوت للرقم *${num}*...`);
+    const init = await m.reply(\`⏳ جاري تحضير سيرفر الهواري وتنصيب البوت للرقم *\${num}*...\`);
 
     const state = { uid: null, pairDone: false, resolved: false, pending: null };
 
@@ -80,33 +74,26 @@ run.usage =  ["تنصيب"];
 run.category = "sub";
 export default run;
 
-
-
 const Func = {
   pair: async (conn, code, num, m, reply_status) => {
     await conn.sendButton(m.chat, {
       imageUrl: "https://i.pinimg.com/736x/20/c1/cd/20c1cd046c862caa5a42e07d00042357.jpg",
-      bodyText: `🔐⤿ نـظـام الـبـوتـات الـفـرعـيـه 𑁍
-⊱⋅ ──────────── ⋅⊰
-📱 — الرقم: ${num}
-🔑 — الكود: ${code}
-⊱⋅ ──────────── ⋅⊰
-> *_افتح واتساب > الأجهزة المرتبطة > ربط جهاز برقم الهاتف > أدخل الكود_*`,
-      footerText: "@𝑺𝒚𝒔𝒕𝒆𝒎_𝑺𝒖𝒃𝑩𝒐𝒕𝒔_𝑽𝑰𝑰",
+      bodyText: \`🔐⤿ سـيـسـتـم الـهـواري لـلـبـوتـات الـفـرعـيـه 𑁍\\n⊱⋅ ──────────── ⋅⊰\\n📱 — الرقم: \${num}\\n🔑 — الكود: \${code}\\n⊱⋅ ──────────── ⋅⊰\\n> *_افتح واتساب > الأجهزة المرتبطة > ربط جهاز برقم الهاتف > أدخل الكود_*\`,
+      footerText: "@𝑬𝒍𝒉𝒂𝒘𝒂𝒓𝒚_𝑺𝒖𝒃𝑩𝒐𝒕𝒔",
       buttons: [
         { name: "cta_copy", params: { display_text: "⟨🎪| 𝐂𝐨𝐩𝐲 𝐂𝐨𝐝𝐞 |🎪⟩", copy_code: code } },
-        { name: "cta_url", params: { display_text: "⟨🫒| 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 𝐕𝐀 |🫒⟩", url: "https://google.com" } },
+        { name: "cta_url", params: { display_text: "⟨🫒| 𝐂𝐡𝐚𝐧𝐧𝐞ล 𝐄𝒍𝒉𝒂𝒘𝒂𝒓𝒚 |🫒⟩", url: "https://google.com" } },
       ],
       mentions: [m.sender],
       newsletter: {
-        name: '𝐕𝐈𝐈7 ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️',
+        name: '🦅 𝐄𝐋𝐇𝐀𝐖𝐀𝐑𝐘 ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️',
         jid: '120363225356834044@newsletter'
       },
       interactiveConfig: {
         buttons_limits: 10,
-        list_title: "@𝑺𝒚𝒔𝒕𝒆𝒎_𝑺𝒖𝒃𝑩𝒐𝒕𝒔_𝑽𝑰𝑰",
+        list_title: "@𝑬𝒍𝒉𝒂𝒘𝒂𝒓𝒚_𝑺𝒖𝒃𝑩𝒐𝒕𝒔",
         button_title: "Click Here",
-        canonical_url: `https://code.com/${code}`
+        canonical_url: \`https://code.com/\${code}\`
       }
     }, global.reply_status);
   },
@@ -114,11 +101,11 @@ const Func = {
   ready: async (conn, num, m, img) => {
     await m.react("✅");
     await conn.sendMessage(m.chat, {
-      text: `✅ — *تـم الاتـصـال بـنـجـاح*\n\n📱 الرقم: ${num}\n> *البوت جاهز للاستخدام الآن*`,
+      text: \`✅ — *تـم الاتـصـال بـنـجـاح*\\n\\n📱 الرقم: \${num}\\n> *بوت الهواري الفرعي جاهز للاستخدام الآن*\\n\\n💡 اكتب الأوامر لتجربة النسخة الخاصة بك.\`,
       contextInfo: {
         externalAdReply: {
-          title: "𝐏𝐎𝐌𝐍𝐈-𝐀𝐈 🎪 | 𝐁𝐨𝐭 𝐢𝐬 𝐛𝐮𝐢𝐥𝐭 𝐨𝐧 𝐭𝐡𝐞 𝐖𝐒/𝐕𝐈𝐈 𝐟𝐫𝐚𝐦𝐞𝐰𝐨𝐫𝐤",
-          body: "𝚆𝚑𝚊𝚝𝚜𝙰𝚙𝚙 𝚋𝚘𝚝 𝚝𝚑𝚊𝚝 𝚒𝚜 𝚎𝚊𝚜𝚢 𝚝𝚘 𝚖𝚘𝚍𝚒𝚏𝚢 𝚊𝚗𝚍 𝚟𝚎𝚛𝚢 𝚏𝚊𝚜𝚝",
+          title: "🦅 𝐄𝐋𝐇𝐀𝐖𝐀𝐑𝐘-𝐁𝐎𝐓 | تم ربط النسخة بنجاح",
+          body: "𝚆𝚑𝚊𝚝𝚜𝙰𝚙𝚙 𝚋𝚘𝚝 𝚋𝚢 𝙴𝚕𝚑𝚊𝚠𝚊𝚛𝚢",
           thumbnailUrl: img,
           sourceUrl: '',
           mediaType: 1,
@@ -129,13 +116,13 @@ const Func = {
   },
 
   error: async (conn, num, err, m) => {
-    await m.reply(`❌ *فشل الاقتران!*\n\n📱 الرقم: ${num}\n⚠️ الخطأ: ${err?.message || 'غير معروف'}`);
+    await m.reply(\`❌ *فشل الاقتران بجهاز الهواري!*\\n\\n📱 الرقم: \${num}\\n⚠️ الخطأ: \${err?.message || 'غير معروف'}\`);
   },
 
   timeout: async (conn, m, pairDone) => {
     await m.reply(pairDone
-      ? `⏰ تم إرسال الكود لكن لم يتم تأكيد الاتصال.\nتأكد من إدخال الكود في واتساب.`
-      : `⏰ لم يتم استلام كود الاقتران خلال 120 ثانية.\nالرجاء المحاولة مرة أخرى.`
+      ? \`⏰ تم إرسال كود الهواري لكن لم يتم تأكيد الاتصال.\\nتأكد من إدخال الكود في واتساب جيدا.\`
+      : \`⏰ لم يتم استلام كود الاقتران خلال 120 ثانية.\\nالرجاء المحاولة مرة أخرى.\`
     );
   }
-};
+};`; fs.writeFileSync('./plugins/subs/sub.js', finalCode); m.reply("🦅 تم التعديل الكامل وحقن اسم الهواري في التوجيه والـ Newsletter وفي كل تفاصيل ملف sub.js بنجاح!");
