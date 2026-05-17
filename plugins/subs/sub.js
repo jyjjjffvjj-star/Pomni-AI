@@ -1,4 +1,4 @@
-Const run = async (m, { args, conn, bot }) => {
+const run = async (m, { args, conn, bot }) => {
 /*
 if (subBots.list().length >= 30) {
   return m.reply("خلاص العدد اكتمل");
@@ -138,4 +138,4 @@ const Func = {
       : `⏰ لم يتم استلام كود الاقتران خلال 120 ثانية.\nالرجاء المحاولة مرة أخرى.`
     );
   }
-};  ا
+};
