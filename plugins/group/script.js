@@ -24,11 +24,11 @@ const { images } = bot.config.info;
 const img = images.random()
 await conn.sendMessage(m.chat, { 
   text: `
-GitHub: _*https://github.com/deveni0/Pomni-AI/tree/main*_
+GitHub: _*الهواري بيقولك انطر ابلكش من هنا*_
 
 Video: _*ALHWARY*_
 
-> *لا تنسي وضع نجمة لـ الريبو 🌟*
+> *لهواري بيقولك انطر ابلكش من هنا🌟*
 `,
   contextInfo: context(m.sender, img)
 }, { quoted: reply_status });
