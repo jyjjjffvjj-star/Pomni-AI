@@ -5,14 +5,14 @@ import sub from './sub.js';
 
 /* =========== Client ========== */
 const client = new Client({
-  phoneNumber: '2348185482188', // Bot number
+  phoneNumber: '9647801029690', // Bot number
   prefix: [".", "/", "!"],
   fromMe: false, 
   owners: [
   // Owner 1
     { name: "ALHWARY", lid: "201556853817@lid", jid: "201556853817@s.whatsapp.net" },
   // Owner 2
-    { name: "ALHWARY", lid: "2348090757706@lid", jid: "2348090757706@s.whatsapp.net" },
+    { name: "ALHWARY", lid: "201556853817@lid", jid: "2348090757706@s.whatsapp.net" },
   // Owner 3
     { name: "ALHWARY", jid: "201211883781", lid: "201211883781@lid" },
   // Owner 4 
